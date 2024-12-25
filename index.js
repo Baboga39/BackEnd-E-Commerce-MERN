@@ -9,8 +9,8 @@ const app = express();
 
 
 const allowedOrigins = [
-    process.env.FRONTEND_URL_DEV,
-    process.env.FRONTEND_URL_PRODUCT
+    "http://localhost:3000",
+    "https://e-commerce-mern-rmoktq5qo-babogas-projects.vercel.app"
 ];
 
 app.use(cors({
