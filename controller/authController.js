@@ -83,7 +83,7 @@ const signIn = async (req, res) => {
 
     const tokenOption = {
         httpOnly: true,
-        sercure: true,
+        secure: true,
     }
 
     console.log('Login successfully')
