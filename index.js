@@ -7,13 +7,30 @@ require('dotenv').config();
 
 const app = express();
 
+
+const allowedOrigins = [
+    process.env.FRONTEND_URL_DEV,
+    process.env.FRONTEND_URL_PRODUCT
+];
+
 app.use(cors({
-    origin: [process.env.FRONTEND_URL_DEV,process.env.FRONTEND_URL_PRODUCT],
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true 
+}));
+app.use(cors({
+    origin: [],
     credentials: true
 }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.options('*', cors());
 app.use(cookieParser())
 router(app);
 
