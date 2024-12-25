@@ -8,21 +8,31 @@ require('dotenv').config();
 const app = express();
 
 
+const FRONTEND_URL = process.env.NODE_ENV === 'production' 
+    ? process.env.FRONTEND_URL_PRODUCT 
+    : process.env.FRONTEND_URL_DEV;
+
 const allowedOrigins = [
-    "http://localhost:3000",
-    "https://e-commerce-mern-rmoktq5qo-babogas-projects.vercel.app"
+    process.env.FRONTEND_URL_DEV,
+    process.env.FRONTEND_URL_PRODUCT
 ];
 
+
 app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-    credentials: true 
-}));
+    origin: FRONTEND_URL,
+    credentials: true,
+}))
+
+// app.use(cors({
+//     origin: (origin, callback) => {
+//         if (!origin || allowedOrigins.includes(origin)) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error("Not allowed by CORS"));
+//         }
+//     },
+//     credentials: true 
+// }));
 app.use(cors({
     origin: [],
     credentials: true
@@ -30,7 +40,6 @@ app.use(cors({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.options('*', cors());
 app.use(cookieParser())
 router(app);
 
