@@ -84,6 +84,7 @@ const signIn = async (req, res) => {
     const tokenOption = {
         httpOnly: true,
         secure: true,
+        sameSite: 'none',
     }
 
     console.log('Login successfully')
